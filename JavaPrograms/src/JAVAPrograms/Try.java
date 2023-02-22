@@ -6,49 +6,45 @@ public class Try {
 
 	public static void sort(int arr[])
 	{
-		int n=arr.length;
-		if(n<2)
-		{
-			return;
-		}
-		int mid=n/2;
-		int left[]=new int[mid];
-		int right[]=new int[n-mid];
-		for(int i=0;i<mid;i++)
-		{
-			left[i]=arr[i];
-		}
-		for(int i=mid;i<n;i++)
-		{
-			right[i-mid]=arr[i];
-		}
-		sort(left);
-		sort(right);
-		marge(left, right, arr);
+		quickSort(arr, 0, arr.length-1);
 	}
-	public static void marge(int[] left,int[] right,int[] arr)
+	public static void quickSort(int arr[],int low ,int high)
 	{
-		int i=0; int k=0; int j=0;
-		while(i<left.length && j<right.length)
+		if(low<high)
 		{
-			if(left[i]<=right[i])
+		int j=partition(arr,low,high);
+		quickSort(arr,low,j);
+		quickSort(arr,j+1,high);
+		}
+	}
+	public static int partition(int arr[],int low,int high)
+	{
+		int pivot=arr[low];
+		int i=low;
+		int j=high;
+		while(i<j)
+		{
+			while(i<high && arr[i]<=pivot)
 			{
-				arr[k++]=left[i++];
+				i++;
 			}
-			else
+			while(j>=low && arr[j]>pivot)
 			{
-				arr[k++]=right[j++];
+				j--;
+			}
+			if(i<j)
+			{
+				swap(arr,i,j);
 			}
 		}
-		while(i<left.length)
-		{
-			arr[k++]=left[i++];
-		}
-		while(j<right.length)
-		{
-			arr[k++]=right[j++];
-		}
-		
+		swap(arr,low,j);
+		return j;
+	}
+	public static void swap(int arr[],int i,int j)
+	{
+		int temp=arr[i];
+		arr[i]=arr[j];
+		arr[j]=temp;
 	}
 	public static void main(String[] args) {
 		int arr[]= {86,42,23,18,25};
